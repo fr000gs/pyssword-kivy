@@ -1,0 +1,91 @@
+#:kivy 2.1.0
+#:import Clipboard kivy.core.clipboard.Clipboard
+#:import hex kivy.utils.get_color_from_hex
+
+<main_screen>:
+    padding: [10, 10, 10, 10]
+    canvas.before:
+        Color:
+            rgba: hex('#33ccbb')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        color: hex('#000000')
+        padding: (10, 10)
+        font_size: 25
+        text: 'Password Manager'
+    Label:
+        color: hex('#000000')
+        padding: (10, 10)
+        font_size: 20
+        text: str(root.pswd)
+    Label:
+        color: hex('#000000')
+        padding: (10, 10)
+        font_size: 20
+        text: 'Show'
+    Label:
+        color: hex('#000000')
+        padding: (10, 10)
+        font_size: 20
+        text: 'Username'
+    TextInput:
+        padding: (10, 10)
+        id: username
+        multiline: True
+        font_size: 20
+        hint_text: 'Enter username'
+    CheckBox:
+        padding: (10, 10)
+        text: 'Show username'
+        on_active: root.show(root.ids.username, self.active)
+        active: True
+    Label:
+        color: hex('#000000')
+        padding: (10, 10)
+        text: 'Website'
+        font_size: 20
+    TextInput:
+        padding: (10, 10)
+        id: site
+        multiline: False
+        font_size: 20
+        hint_text: 'Enter website'
+    CheckBox:
+        padding: (10, 10)
+        on_active: root.show(root.ids.site, self.active)
+        active: True
+    Label:
+        color: hex('#000000')
+        padding: (10, 10)
+        font_size: 20
+        text: 'Master password'
+    TextInput:
+        padding: (10, 10)
+        id: m_pswd
+        font_size: 20
+        text: root.master_passwd
+        hint_text: 'Enter master password'
+        on_text: root.master_passwd = root.ids.m_pswd.text
+        password: True
+    CheckBox:
+        padding: (10, 10)
+        on_active: root.show(root.ids.m_pswd, self.active)
+        active: False
+    Button:
+        padding: (10, 10)
+        text: 'Go!'
+        on_press: root.complete()
+        background_normal: ''
+        background_color: hex('#338877')
+    Button:
+        padding: (10, 10)
+        text: 'Copy to clipboard'
+        on_press: Clipboard.copy(root.pswd)
+        background_normal: ''
+        background_color: hex('#339977')
+    CheckBox:
+        id: m_pswd_check
+        padding: (10, 10)
+        on_active: root.pswd = 18*'*' if self.active else root.passwd
